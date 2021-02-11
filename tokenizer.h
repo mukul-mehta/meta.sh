@@ -29,19 +29,6 @@ using namespace std;
 vector<string> tokenize(const char *line);
 
 /*
-	char *parse_memory(long int memory)
-	------------------
-	Convert a long int memory to a char array with appropriate suffix (KB/MB/GB)
-*/
-char *parse_memory(long int memory);
-
-/*
-	char *parse_time(long int time)
-	------------------
-	Convert a long int time to a char array with appropriate formatting (days, hours, minutes)
-*/
-char *parse_time(long int time);
-/*
 	vector<vector<string>> parsePipeTokens(vector<string> tokens)
 	------------------
 	In case the input contains pipes, split around the pipe character into individual
