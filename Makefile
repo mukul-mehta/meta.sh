@@ -1,4 +1,4 @@
-SRCS=shell.cc utils.cc
+SRCS=shell.cc tokenizer.cc
 EXECUTABLES=shell
 
 # Define the compilers to be used to build the project

@@ -1,11 +1,12 @@
-#ifndef UTILS_H_
-#define UTILS_H_
+#ifndef TOKENIZER_H_
+#define TOKENIZER_H_
 
 #include <vector>
 #include <string>
 
+#define MAXTOKEN 1024
+
 using namespace std;
-// Tokenizer helpers
 
 /*
 	vector<string> tokenize(const char *line)
@@ -49,4 +50,4 @@ char *parse_time(long int time);
 */
 
 vector<vector<string>> parsePipeTokens(vector<string> tokens);
-#endif // UTILS_H_
+#endif // TOKENIZER_H_
