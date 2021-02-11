@@ -16,7 +16,7 @@ using namespace std;
 	Parameters:
 	------------------
 	line: const char *
-		The input as received by the `fgets` function call made in the main shell loop
+		The input as received by the `readline` function call made in the main shell loop
 
 	Returns:
 	------------------
@@ -26,7 +26,7 @@ using namespace std;
 	The tokenizer escapes quotes, spaces and the backslash character
 
 */
-vector<string> tokenize(const char *line);
+vector<string> tokenize(char *line);
 
 /*
 	vector<vector<string>> parsePipeTokens(vector<string> tokens)

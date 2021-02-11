@@ -2,7 +2,7 @@
 
 #include "tokenizer.h"
 
-vector<string> tokenize(const char *line)
+vector<string> tokenize(char *line)
 {
 	vector<string> tokens;
 	if (line == NULL)
@@ -11,6 +11,7 @@ vector<string> tokenize(const char *line)
 	}
 
 	static char token[MAXTOKEN];
+	memset(token, '\0', MAXTOKEN);
 	size_t n = 0;
 	size_t len = strlen(line);
 
@@ -102,7 +103,6 @@ vector<string> tokenize(const char *line)
 		tokens.push_back(temp);
 		n = 0;
 	}
-
 	return tokens;
 }
 

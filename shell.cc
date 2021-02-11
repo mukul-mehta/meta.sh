@@ -7,6 +7,10 @@
 #include <fcntl.h>
 #include <pwd.h>
 #include <signal.h>
+
+#include <readline/readline.h>
+#include <readline/history.h>
+
 #include <sys/ioctl.h>
 #include <sys/stat.h>
 #include <sys/sysinfo.h>
@@ -109,23 +113,23 @@ int main(int argc, char **argv)
 	getcwd(__CWD, BUFSIZE);
 
 	char *line;
-	size_t getline_size = 0;
 
-	printf("%s", getShellPrompt());
-	while (getline(&line, &getline_size, stdin))
+	while ((line = readline(getShellPrompt())) != nullptr)
 	{
-		if (feof(stdin))
-			exit(EXIT_SUCCESS);
-
-		vector<string> tokens = tokenize(line);
-		if (tokens.empty())
+		if (strlen(line) > 0)
+			add_history(line);
+		else
 		{
-			printf("%s", getShellPrompt());
+			free(line);
 			continue;
 		}
 
+		vector<string> tokens = tokenize(line);
+
+		free(line);
+
 		// Check if command is a builtin using the `checkBuiltin` call. If yes, execute it
-		unused int isBuiltin = checkBuiltin(tokens);
+		int isBuiltin = checkBuiltin(tokens);
 
 		if (isBuiltin >= 0)
 		{
@@ -287,10 +291,8 @@ int main(int argc, char **argv)
 				}
 			}
 		}
-		printf("%s", getShellPrompt());
 		tokens.clear();
 		fflush(stdin);
-		getline_size = 0;
 	}
 
 	return 0;
