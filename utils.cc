@@ -8,6 +8,8 @@
 
 #include "utils.h"
 
+using namespace std;
+
 char *parse_memory(long int memory)
 {
 	char *response = (char *)malloc(1024 * sizeof(char));

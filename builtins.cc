@@ -4,7 +4,6 @@
 #include <pwd.h>
 #include <signal.h>
 
-#include <iostream>
 #include <algorithm>
 
 #include <sys/ioctl.h>
@@ -12,11 +11,12 @@
 #include <sys/sysinfo.h>
 #include <sys/types.h>
 #include <sys/utsname.h>
-#include <sys/wait.h>
 #include <unistd.h>
 
 #include "builtins.h"
 #include "utils.h"
+
+using namespace std;
 
 char __CWD[BUFSIZE];
 
@@ -54,7 +54,7 @@ int metash_pwd(vector<string> tokens)
 	string pwd = getcwd(current_directory, BUFSIZE);
 	if (!pwd.empty())
 	{
-		cout << pwd << endl;
+		printf("%s\n", pwd.c_str());
 		return 0;
 	}
 	perror("Error in fetching current working directory");
@@ -66,7 +66,7 @@ int metash_cd(vector<string> tokens)
 	size_t num_tokens = tokens.size();
 	if (num_tokens >= 3)
 	{
-		cout << "cd : too many arguments" << endl;
+		printf("cd: too many arguments\n");
 		return -1;
 	}
 

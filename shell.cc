@@ -1,21 +1,16 @@
+#include <stdio.h>
+#include <stdlib.h>
 #include <string.h>
-
-#include <iostream>
-#include <algorithm>
-#include <fstream>
-
 #include <fcntl.h>
-#include <pwd.h>
 #include <signal.h>
+
+#include <algorithm>
 
 #include <readline/readline.h>
 #include <readline/history.h>
 
 #include <sys/ioctl.h>
-#include <sys/stat.h>
-#include <sys/sysinfo.h>
 #include <sys/types.h>
-#include <sys/utsname.h>
 #include <sys/wait.h>
 #include <unistd.h>
 
@@ -27,8 +22,6 @@ using namespace std;
 
 #define unused __attribute__((unused)) /* Silence compiler warnings about unused variables */
 #define BUFSIZE 4096
-#define READ_FLAGS O_RDONLY
-#define WRITE_FLAGS O_WRONLY | O_TRUNC | O_CREAT, S_IRUSR | S_IRGRP | S_IWGRP | S_IWUSR
 
 #define RED "\x1b[31m"
 #define GREEN "\x1b[92m"
@@ -74,6 +67,7 @@ int checkBuiltin(vector<string> tokens)
 	// Iterate over builtins and check if the command is same as the first token. If found, return index else -1
 	string command = tokens[0];
 	size_t n = builtins.size();
+
 	for (size_t i = 0; i < n; i++)
 	{
 		if (builtins[i].command == command)

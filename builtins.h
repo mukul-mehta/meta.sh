@@ -23,8 +23,6 @@
 #define VERSION "0.1"
 #define AUTHORS "Mukul Mehta | Rashil Gandhi"
 
-using namespace std;
-
 /*
 	struct builtinFunction
 	Handle shell builtins along with their help string
@@ -37,9 +35,9 @@ using namespace std;
 */
 struct builtinFunction
 {
-	int (*builtin_fp)(vector<string> tokens);
-	string command;
-	string help;
+	int (*builtin_fp)(std::vector<std::string> tokens);
+	std::string command;
+	std::string help;
 };
 
 /*
@@ -54,14 +52,14 @@ struct builtinFunction
 	------------------
 	Exits the shell. Arguments unused
 */
-int metash_exit(unused vector<string> tokens);
+int metash_exit(unused std::vector<std::string> tokens);
 
 /*
 	int metash_help(vector<string> tokens)
 	------------------
 	Display help menu with information about builtins. Arguments unused
 */
-int metash_help(vector<string> tokens);
+int metash_help(std::vector<std::string> tokens);
 
 /*
 	int metash_pwd(vector<string> tokens)
@@ -69,7 +67,7 @@ int metash_help(vector<string> tokens);
 	Prints the current working directory of the shell process using the `chdir()` call defined in <unistd.h>
 	If additional parameters are passed, prints an error and returns -1
 */
-int metash_pwd(vector<string> tokens);
+int metash_pwd(std::vector<std::string> tokens);
 
 /*
 	int metash_cd(vector<string> tokens)
@@ -84,7 +82,7 @@ int metash_pwd(vector<string> tokens);
 		If there is just one token, cd changes to the user's home directory, obtained using `getpwuid` from <pwd.h>
 		If >= 3 arguments are passed, prints an error and returns -1
 */
-int metash_cd(vector<string> tokens);
+int metash_cd(std::vector<std::string> tokens);
 
 /*
 	int metash_fetch(vector<string> tokens)
@@ -94,7 +92,7 @@ int metash_cd(vector<string> tokens);
 	Kernel and Platform: Fills the `utsname` struct using the `uname` call from <sys/utsname.h>
 	Uptime and Memory: Fills the `sysinfo` struct using the `sysinfo` call from <sys/sysinfo.h>
 */
-int metash_fetch(unused vector<string> tokens);
+int metash_fetch(unused std::vector<std::string> tokens);
 
 /*
 	int metash_execute(vector<string> tokens)
@@ -111,6 +109,6 @@ int metash_fetch(unused vector<string> tokens);
 		set to STDIN_FILENO or STDOUT_FILENO depending on what is being redirected
 		If the call to `execvp` fails, print an error and return -1
 */
-int metash_execute(vector<string> tokens);
+int metash_execute(std::vector<std::string> tokens);
 
 #endif // BUILTINS_H_

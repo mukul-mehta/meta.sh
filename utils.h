@@ -4,7 +4,6 @@
 #include <string>
 
 #define BUFSIZE 4096
-using namespace std;
 
 /*
 	char *parse_memory(long int memory)
@@ -21,8 +20,8 @@ char *parse_memory(long int memory);
 char *parse_time(long int time);
 
 // Fetch Username, Hostname and OS Name from appropriate headers
-string getUsername();
-string getHostname();
-string getOSName();
+std::string getUsername();
+std::string getHostname();
+std::string getOSName();
 
 #endif // UTILS_H_

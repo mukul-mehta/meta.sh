@@ -1,6 +1,8 @@
-#include <cstring>
+#include <string.h>
 
 #include "tokenizer.h"
+
+using namespace std;
 
 vector<string> tokenize(char *line)
 {

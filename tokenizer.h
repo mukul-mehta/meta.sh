@@ -6,8 +6,6 @@
 
 #define MAXTOKEN 1024
 
-using namespace std;
-
 /*
 	vector<string> tokenize(const char *line)
 	------------------
@@ -26,7 +24,7 @@ using namespace std;
 	The tokenizer escapes quotes, spaces and the backslash character
 
 */
-vector<string> tokenize(char *line);
+std::vector<std::string> tokenize(char *line);
 
 /*
 	vector<vector<string>> parsePipeTokens(vector<string> tokens)
@@ -36,5 +34,5 @@ vector<string> tokenize(char *line);
 	[[cat, a.txt], [grep, "some text"], [wc]]
 */
 
-vector<vector<string>> parsePipeTokens(vector<string> tokens);
+std::vector<std::vector<std::string>> parsePipeTokens(std::vector<std::string> tokens);
 #endif // TOKENIZER_H_
