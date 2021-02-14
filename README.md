@@ -4,7 +4,9 @@ A tiny shell for Linux, implemented in C++, written as part of my Operating Syst
 
 
 
-![Running the shell](assets/shell.jpeg)
+<p align="center">
+  <img src="assets/shell.jpeg" alt="Running the shell"/>
+</p>
 
 
 
@@ -79,7 +81,7 @@ make
 
 - [ ] Add support for aliases
 
-- [ ] Migrate to C. We aren't really using any C features, other than vectors
+- [ ] Migrate to C. We aren't really using any C++ features, other than vectors
 
 - [ ] Support macOS - For now, using some Linux specific headers to fetch sysinfo
 
