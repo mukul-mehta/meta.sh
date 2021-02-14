@@ -56,7 +56,7 @@ cat file.txt | grep "somestring" | wc -l > out.txt
 
 
 
-### Installation/Usage
+## Installation/Usage
 
 meta.sh uses the GNU Readline library to add support for history and editing. Please install the library (Called ```libreadline6-dev``` on Debian and derivatives)
 
@@ -71,15 +71,15 @@ make
 
 
 
-### TODOs
+## TODOs
 
-[ ] Support reading and writing history to a file, using GNU Readline functions
+- [ ] Support reading and writing history to a file, using GNU Readline functions
 
-[ ] Add support for setting and unsetting environment variables
+- [ ] Add support for setting and unsetting environment variables
 
-[ ] Add support for aliases
+- [ ] Add support for aliases
 
-[ ] Migrate to C. We aren't really using any C features, other than vectors
+- [ ] Migrate to C. We aren't really using any C features, other than vectors
 
-[ ] Support macOS - For now, using some Linux specific headers to fetch sysinfo
+- [ ] Support macOS - For now, using some Linux specific headers to fetch sysinfo
 
