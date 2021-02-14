@@ -36,7 +36,7 @@ Processes can be run in background by adding ```&``` at the end of the input. Th
 
 #### I/O Redirection
 
-Use the ```<``` symbol to redirect input from a file and the ```>``` symbol to redirect output to a file. For example:
+Use the ```<``` symbol to redirect input from a file and the ```>``` symbol to redirect output to a file. Implemented using the ```dup2()``` system call. For example:
 
 ```bash
 ls > out.txt
@@ -47,7 +47,7 @@ ls > out.txt
 
 #### Piping
 
-There is support for pipes between commands (Any number of pipes). For example:
+There is support for pipes between commands (Any number of pipes), using the ```pipe()``` system call. For example:
 
 ```bash
 ls | more
