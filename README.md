@@ -75,7 +75,7 @@ make
 
 ## TODOs
 
-- [ ] Support reading and writing history to a file, using GNU Readline functions
+- [x] Support reading and writing history to a file, using GNU Readline functions
 
 - [ ] Add support for setting and unsetting environment variables
 

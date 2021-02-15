@@ -1,6 +1,7 @@
 #include <pwd.h>
 #include <stdio.h>
 #include <stdlib.h>
+#include <string.h>
 #include <sys/types.h>
 #include <unistd.h>
 
@@ -58,6 +59,22 @@ char *parse_time(long int time)
 			sprintf(response, "%d days, %d hours, %d minutes", days, hours, minutes);
 	}
 	return response;
+}
+
+char *getHistoryFilename()
+{
+	char *histfile = (char *)malloc(BUFSIZE * sizeof(char));
+	uid_t uid = geteuid();
+	struct passwd *pw = getpwuid(uid);
+	if (!pw)
+	{
+		histfile = NULL;
+	}
+	histfile = pw->pw_dir;
+
+	char *fullFilePath = (char *)malloc(BUFSIZE * sizeof(char));
+	sprintf(fullFilePath, "%s/%s", histfile, HISTORYFILENAME);
+	return fullFilePath;
 }
 
 string getUsername()

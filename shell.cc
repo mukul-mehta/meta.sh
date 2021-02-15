@@ -105,6 +105,10 @@ int main(int argc, char **argv)
 {
 	metash_help(vector<string>{});
 	getcwd(__CWD, BUFSIZE);
+	const char *HISTORYFILE = getHistoryFilename();
+
+	read_history(HISTORYFILE);
+	using_history();
 
 	char *line;
 
@@ -288,6 +292,7 @@ int main(int argc, char **argv)
 		tokens.clear();
 		fflush(stdin);
 	}
+	write_history(HISTORYFILE);
 
 	return 0;
 }
