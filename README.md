@@ -22,7 +22,9 @@ The shell has support for the following builtins
 - ```exit``` - Cleanly exit the shell
 - ```fetch``` - Show system information
 - ```history``` - Show all commands executed on the shell
-
+- ```setenv``` - Set an environment variable to specified value
+- ```getenv``` - Fetch the value of the given environment variable
+- ```unsetenv``` - Unset the given environment variable
 
 
 #### Running External Commands
@@ -78,7 +80,7 @@ make
 
 - [x] Support reading and writing history to a file, using GNU Readline functions
 
-- [ ] Add support for setting and unsetting environment variables
+- [x] Add support for setting and unsetting environment variables
 
 - [ ] Add support for aliases
 
