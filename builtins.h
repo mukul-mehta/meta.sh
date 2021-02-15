@@ -119,4 +119,27 @@ int metash_execute(std::vector<std::string> tokens);
 */
 int metash_history(unused std::vector<std::string> tokens);
 
+/*
+	int metash_setenv(vector<string> tokens)
+	------------------
+	Set an environment variable. For a command of the form `setenv XYZ ABC`, set the XYZ environment
+	variable to the value ABC. If no value ABC is given, set it to empty
+*/
+int metash_setenv(std::vector<std::string> tokens);
+
+/*
+	int metash_unsetenv(vector<string> tokens)
+	------------------
+	Unset an environment variable. For a command of the form `unsetenv XYZ`, remove the env variable XYZ
+*/
+int metash_unsetenv(std::vector<std::string> tokens);
+
+/*
+	int metash_getenv(vector<string> tokens)
+	------------------
+	Fetch the value of an environment variable. For a command of the form `getenv XYZ`, fetch
+	the value of the environment variable XYZ
+*/
+int metash_getenv(std::vector<std::string> tokens);
+
 #endif // BUILTINS_H_

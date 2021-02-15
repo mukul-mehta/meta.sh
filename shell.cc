@@ -61,6 +61,10 @@ vector<builtinFunction> builtins = {
 	{metash_exit, "exit", "Cleanly exits the shell"},
 	{metash_fetch, "fetch", "Show system information"},
 	{metash_history, "history", "Show all commands executed on the shell"},
+	{metash_setenv, "setenv", "Set an environment variable to specified value"},
+	{metash_getenv, "getenv", "Fetch the value of the given environment variable"},
+	{metash_unsetenv, "unsetenv", "Unset the given environment variable"},
+
 };
 
 int checkBuiltin(vector<string> tokens)

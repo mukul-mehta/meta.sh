@@ -30,17 +30,20 @@ int metash_exit(unused vector<string> tokens)
 
 int metash_help(vector<string> tokens)
 {
-	printf("%s++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++%s\n", PURPLE, NORM);
-	printf("%s++++++%s /\\        %sHi there. There are \033[4mfive%s %sbuiltin commands%s     /\\ %s++++++%s\n", PURPLE, NORM, CYAN, NORM, CYAN, NORM, PURPLE, NORM);
-	printf("%s++++++%s cd%s:      Changes working directory to the one specified    %s++++++%s\n", PURPLE, YELLOW, NORM, PURPLE, NORM);
-	printf("%s++++++%s pwd%s:     Shows current working directory                   %s++++++%s\n", PURPLE, YELLOW, NORM, PURPLE, NORM);
-	printf("%s++++++%s help%s:    Shows this help text                              %s++++++%s\n", PURPLE, YELLOW, NORM, PURPLE, NORM);
-	printf("%s++++++%s exit%s:    Cleanly exits the shell                           %s++++++%s\n", PURPLE, YELLOW, NORM, PURPLE, NORM);
-	printf("%s++++++%s fetch%s:   Show system information                           %s++++++%s\n", PURPLE, YELLOW, NORM, PURPLE, NORM);
-	printf("%s++++++%s history%s: Show all commands executed on the shell           %s++++++%s\n", PURPLE, YELLOW, NORM, PURPLE, NORM);
-	printf("%s++++++%s Anything else is considered as an executable, and should   %s++++++%s\n", PURPLE, BLUE, PURPLE, NORM);
-	printf("%s++++++%s be present in your PATH. \033[1;3;34mEnjoy!%s                            %s++++++%s\n", PURPLE, BLUE, NORM, PURPLE, NORM);
-	printf("%s++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++%s\n", PURPLE, NORM);
+	printf("%s+++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++%s\n", PURPLE, NORM);
+	printf("%s++++++%s /\\        %sHi there. There are \033[4mfive%s %sbuiltin commands%s     /\\  %s++++++%s\n", PURPLE, NORM, CYAN, NORM, CYAN, NORM, PURPLE, NORM);
+	printf("%s++++++%s cd%s:       Changes working directory to the one specified    %s++++++%s\n", PURPLE, YELLOW, NORM, PURPLE, NORM);
+	printf("%s++++++%s pwd%s:      Shows current working directory                   %s++++++%s\n", PURPLE, YELLOW, NORM, PURPLE, NORM);
+	printf("%s++++++%s help%s:     Shows this help text                              %s++++++%s\n", PURPLE, YELLOW, NORM, PURPLE, NORM);
+	printf("%s++++++%s exit%s:     Cleanly exits the shell                           %s++++++%s\n", PURPLE, YELLOW, NORM, PURPLE, NORM);
+	printf("%s++++++%s fetch%s:    Show system information                           %s++++++%s\n", PURPLE, YELLOW, NORM, PURPLE, NORM);
+	printf("%s++++++%s history%s:  Show all commands executed on the shell           %s++++++%s\n", PURPLE, YELLOW, NORM, PURPLE, NORM);
+	printf("%s++++++%s getenv%s:   Set an environment variable to specified value    %s++++++%s\n", PURPLE, YELLOW, NORM, PURPLE, NORM);
+	printf("%s++++++%s setenv%s:   Fetch the value of the given environment variable %s++++++%s\n", PURPLE, YELLOW, NORM, PURPLE, NORM);
+	printf("%s++++++%s unsetenv%s: Unset the given environment variable              %s++++++%s\n", PURPLE, YELLOW, NORM, PURPLE, NORM);
+	printf("%s++++++%s Anything else is considered as an executable, and should    %s++++++%s\n", PURPLE, BLUE, PURPLE, NORM);
+	printf("%s++++++%s be present in your PATH. \033[1;3;34mEnjoy!%s                             %s++++++%s\n", PURPLE, BLUE, NORM, PURPLE, NORM);
+	printf("%s+++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++%s\n", PURPLE, NORM);
 
 	return 0;
 }
@@ -220,6 +223,88 @@ int metash_history(unused vector<string> tokens)
 
 	for (int i = 0; i < history_length; i++)
 		printf("%s%d%s: %s\n", RED, i + history_base, NORM, hist_list[i]->line);
+
+	return 0;
+}
+
+int metash_setenv(vector<string> tokens)
+{
+	size_t num_tokens = tokens.size();
+	if (num_tokens >= 4)
+	{
+		printf("setenv: too many arguments\n");
+		return -1;
+	}
+
+	if (num_tokens == 1)
+	{
+		printf("setenv: too few arguments\n");
+		return -1;
+	}
+
+	string value;
+	if (num_tokens == 2)
+		value = "\0";
+	else
+		value = tokens[num_tokens - 1];
+
+	string key = tokens[1];
+
+	int status = setenv(key.c_str(), value.c_str(), 69);
+	if (status == -1)
+		return -1;
+
+	return 0;
+}
+
+int metash_unsetenv(vector<string> tokens)
+{
+	size_t num_tokens = tokens.size();
+	if (num_tokens >= 3)
+	{
+		printf("unsetenv: too many arguments\n");
+		return -1;
+	}
+
+	if (num_tokens == 1)
+	{
+		printf("unsetenv: too few arguments\n");
+		return -1;
+	}
+
+	string key = tokens[1];
+
+	int status = unsetenv(key.c_str());
+	if (status == -1)
+		return -1;
+
+	return 0;
+}
+
+int metash_getenv(vector<string> tokens)
+{
+	size_t num_tokens = tokens.size();
+	if (num_tokens >= 3)
+	{
+		printf("getenv: too many arguments\n");
+		return -1;
+	}
+
+	if (num_tokens == 1)
+	{
+		printf("getenv: too few arguments\n");
+		return -1;
+	}
+
+	string key = tokens[1];
+
+	char *value = (char *)malloc(BUFSIZE * sizeof(char));
+	value = getenv(key.c_str());
+
+	if (value == NULL)
+		value = (char *)"\0";
+
+	printf("%s\n", value);
 
 	return 0;
 }

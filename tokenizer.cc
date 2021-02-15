@@ -52,6 +52,7 @@ vector<string> tokenize(char *line)
 					string word = temp;
 					tokens.push_back(word);
 					n = 0;
+					memset(token, '\0', MAXTOKEN);
 				}
 			}
 			else
