@@ -60,6 +60,7 @@ vector<builtinFunction> builtins = {
 	{metash_help, "help", "Shows this help text"},
 	{metash_exit, "exit", "Cleanly exits the shell"},
 	{metash_fetch, "fetch", "Show system information"},
+	{metash_history, "history", "Show all commands executed on the shell"},
 };
 
 int checkBuiltin(vector<string> tokens)
@@ -115,7 +116,10 @@ int main(int argc, char **argv)
 	while ((line = readline(getShellPrompt())) != nullptr)
 	{
 		if (strlen(line) > 0)
+		{
 			add_history(line);
+			write_history(HISTORYFILE);
+		}
 		else
 		{
 			free(line);
@@ -292,7 +296,6 @@ int main(int argc, char **argv)
 		tokens.clear();
 		fflush(stdin);
 	}
-	write_history(HISTORYFILE);
 
 	return 0;
 }

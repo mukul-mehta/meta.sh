@@ -6,6 +6,9 @@
 
 #include <algorithm>
 
+#include <readline/readline.h>
+#include <readline/history.h>
+
 #include <sys/ioctl.h>
 #include <sys/stat.h>
 #include <sys/sysinfo.h>
@@ -29,11 +32,12 @@ int metash_help(vector<string> tokens)
 {
 	printf("%s++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++%s\n", PURPLE, NORM);
 	printf("%s++++++%s /\\        %sHi there. There are \033[4mfive%s %sbuiltin commands%s     /\\ %s++++++%s\n", PURPLE, NORM, CYAN, NORM, CYAN, NORM, PURPLE, NORM);
-	printf("%s++++++%s cd%s:    Changes working directory to the one specified      %s++++++%s\n", PURPLE, YELLOW, NORM, PURPLE, NORM);
-	printf("%s++++++%s pwd%s:   Shows current working directory                     %s++++++%s\n", PURPLE, YELLOW, NORM, PURPLE, NORM);
-	printf("%s++++++%s help%s:  Shows this help text                                %s++++++%s\n", PURPLE, YELLOW, NORM, PURPLE, NORM);
-	printf("%s++++++%s exit%s:  Cleanly exits the shell                             %s++++++%s\n", PURPLE, YELLOW, NORM, PURPLE, NORM);
-	printf("%s++++++%s fetch%s: Show system information                             %s++++++%s\n", PURPLE, YELLOW, NORM, PURPLE, NORM);
+	printf("%s++++++%s cd%s:      Changes working directory to the one specified    %s++++++%s\n", PURPLE, YELLOW, NORM, PURPLE, NORM);
+	printf("%s++++++%s pwd%s:     Shows current working directory                   %s++++++%s\n", PURPLE, YELLOW, NORM, PURPLE, NORM);
+	printf("%s++++++%s help%s:    Shows this help text                              %s++++++%s\n", PURPLE, YELLOW, NORM, PURPLE, NORM);
+	printf("%s++++++%s exit%s:    Cleanly exits the shell                           %s++++++%s\n", PURPLE, YELLOW, NORM, PURPLE, NORM);
+	printf("%s++++++%s fetch%s:   Show system information                           %s++++++%s\n", PURPLE, YELLOW, NORM, PURPLE, NORM);
+	printf("%s++++++%s history%s: Show all commands executed on the shell           %s++++++%s\n", PURPLE, YELLOW, NORM, PURPLE, NORM);
 	printf("%s++++++%s Anything else is considered as an executable, and should   %s++++++%s\n", PURPLE, BLUE, PURPLE, NORM);
 	printf("%s++++++%s be present in your PATH. \033[1;3;34mEnjoy!%s                            %s++++++%s\n", PURPLE, BLUE, NORM, PURPLE, NORM);
 	printf("%s++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++%s\n", PURPLE, NORM);
@@ -205,4 +209,17 @@ int metash_execute(vector<string> tokens)
 		printf("execvp() failed: Command not found: %s\n", tokens[0].c_str());
 	}
 	exit(EXIT_FAILURE);
+}
+
+int metash_history(unused vector<string> tokens)
+{
+	HIST_ENTRY **hist_list = history_list();
+
+	if (!hist_list)
+		return 1;
+
+	for (int i = 0; i < history_length; i++)
+		printf("%s%d%s: %s\n", RED, i + history_base, NORM, hist_list[i]->line);
+
+	return 0;
 }

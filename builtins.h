@@ -111,4 +111,12 @@ int metash_fetch(unused std::vector<std::string> tokens);
 */
 int metash_execute(std::vector<std::string> tokens);
 
+/*
+	int metash_history(vector<string> tokens)
+	------------------
+	Print a numbered list of all commands executed on the shell, not limited to the present session
+
+*/
+int metash_history(unused std::vector<std::string> tokens);
+
 #endif // BUILTINS_H_
