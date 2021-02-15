@@ -21,6 +21,7 @@ The shell has support for the following builtins
 - ```help``` - Show a help menu (As shown in the image)
 - ```exit``` - Cleanly exit the shell
 - ```fetch``` - Show system information
+- ```history``` - Show all commands executed on the shell
 
 
 
