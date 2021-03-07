@@ -142,7 +142,7 @@ int main(int argc, char** argv) {
         } else {
             // If the last token of the input is &, the command is to be run in background
             // Set the bool isBackground and remove the token because execvp does not need it
-            unused bool isBackground = false;
+            bool isBackground = false;
             if (tokens[tokens.size() - 1] == "&") {
                 isBackground = true;
                 tokens.pop_back();

@@ -35,8 +35,8 @@
 */
 struct builtinFunction {
     int (*builtin_fp)(std::vector<std::string> tokens);
-    std::string command;
-    std::string help;
+    const char* command;
+    const char* help;
 };
 
 /*
@@ -58,7 +58,7 @@ int metash_exit(unused std::vector<std::string> tokens);
 	------------------
 	Display help menu with information about builtins. Arguments unused
 */
-int metash_help(std::vector<std::string> tokens);
+int metash_help(unused std::vector<std::string> tokens);
 
 /*
 	int metash_pwd(vector<string> tokens)

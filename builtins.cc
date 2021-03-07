@@ -25,7 +25,7 @@ char __CWD[BUFSIZE];
 
 int metash_exit(unused vector<string> tokens) { exit(EXIT_SUCCESS); }
 
-int metash_help(vector<string> tokens) {
+int metash_help(unused vector<string> tokens) {
     printf("%s+++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++%s\n",
            PURPLE, NORM);
     printf("%s++++++%s /\\        %sHi there. There are \033[4mfive%s %sbuiltin commands%s     /\\ "
