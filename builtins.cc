@@ -111,9 +111,9 @@ int metash_cd(vector<string> tokens) {
 
 int metash_fetch(unused vector<string> tokens) {
     // Fetch username, hostname and OS Name
-    unused string username = getUsername();
-    unused string hostname = getHostname();
-    unused string OSname = getOSName();
+    const char* username = getUsername();
+    const char* hostname = getHostname();
+    const char* OSname = getOSName();
 
     string kernel_name, kernel_version, machine;
 
@@ -144,15 +144,15 @@ int metash_fetch(unused vector<string> tokens) {
     }
 
     char* user_host_string = (char*)malloc(BUFSIZE * sizeof(char));
-    sprintf(user_host_string, "%s%s@%s%s\n", BLUE, username.c_str(), hostname.c_str(), NORM);
-    size_t len = username.size() + hostname.size();
+    sprintf(user_host_string, "%s%s@%s%s\n", BLUE, username, hostname, NORM);
+    size_t len = strlen(username) + strlen(hostname);
 
     printf(user_host_string);
     for (size_t i = 0; i <= len; i++)
         printf("-");
     printf("\n");
 
-    printf("%sOS%s:       %s\n", BLUE, NORM, OSname.c_str());
+    printf("%sOS%s:       %s\n", BLUE, NORM, OSname);
     printf("%sKernel%s:   %s %s\n", BLUE, NORM, kernel_name.c_str(), kernel_version.c_str());
     printf("%sPlatform%s: %s\n", BLUE, NORM, machine.c_str());
     printf("%sMemory%s:   %s / %s\n", BLUE, NORM, parse_memory(consumed_memory),

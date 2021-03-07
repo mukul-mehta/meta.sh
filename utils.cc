@@ -5,8 +5,6 @@
 #include <sys/types.h>
 #include <unistd.h>
 
-#include <fstream>
-
 #include "utils.h"
 
 using namespace std;
@@ -63,7 +61,7 @@ char* getHistoryFilename() {
     return fullFilePath;
 }
 
-string getUsername() {
+const char* getUsername() {
     char* username = (char*)malloc(BUFSIZE * sizeof(char));
     uid_t uid = geteuid();
     struct passwd* pw = getpwuid(uid);
@@ -72,27 +70,33 @@ string getUsername() {
     }
     username = pw->pw_name;
 
-    return string(username);
+    return username;
 }
 
-string getHostname() {
+const char* getHostname() {
     char* hostname = (char*)malloc(BUFSIZE * sizeof(char));
     int ret = gethostname(hostname, BUFSIZE);
     if (ret < 0) {
         hostname = (char*)"";
     }
-    return string(hostname);
+    return hostname;
 }
 
-string getOSName() {
-    ifstream infile("/etc/os-release");
+const char* getOSName() {
+    FILE* infile = fopen("/etc/os-release", "r");
+    char* line = NULL;
+    size_t len = 0;
 
-    if (infile.good()) {
-        string temp;
-        getline(infile, temp);
-        string OSName = temp.substr(temp.find("=") + 2, temp.size() - 1);
-        OSName.pop_back();
-        return OSName;
+    if (infile) {
+        getline(&line, &len, infile);
+        char* temp = (char*)malloc(BUFSIZE * sizeof(char));
+
+        strcpy(temp, line);
+        strtok(temp, "=");
+
+        char* result = (char*)malloc(BUFSIZE * sizeof(char));
+        strncpy(result, &line[strlen(temp) + 2], strlen(line) - strlen(temp) - 4);
+        return result;
     }
     return "Unknown Linux Distribution";
 }

@@ -80,8 +80,8 @@ int checkBuiltin(vector<string> tokens) {
 }
 
 const char* getShellPrompt() {
-    string username = getUsername();
-    string hostname = getHostname();
+    const char* username = getUsername();
+    const char* hostname = getHostname();
     char timeBuffer[12];
 
     auto t = time(nullptr);
@@ -95,14 +95,13 @@ const char* getShellPrompt() {
     struct winsize size;
     ioctl(STDOUT_FILENO, TIOCGWINSZ, &size);
     int width = size.ws_col;
-    int numSpaces = width - (strlen(__CWD) + 2) - (hostname.size()) - (strlen(timeBuffer));
+    int numSpaces = width - (strlen(__CWD) + 2) - (strlen(hostname)) - (strlen(timeBuffer));
 
     string spaces(numSpaces, ' ');
     sprintf(prompt, ": %s%s%s%s%s%s%s [%s%s@%s%s] \n%s@%s ", GREEN, __CWD, NORM, spaces.c_str(),
-            GRAY, timeBuffer, NORM, CYAN, username.c_str(), hostname.c_str(), NORM, RED, NORM);
-    sprintf(prompt, "%s%s%s: %s%s%s%s%s%s%s\n%s%s%s %s@%s ", YELLOW, hostname.c_str(), NORM,
-            GREENIT, __CWD, NORM, spaces.c_str(), GRAY, timeBuffer, NORM, CYAN, username.c_str(),
-            NORM, RED, NORM);
+            GRAY, timeBuffer, NORM, CYAN, username, hostname, NORM, RED, NORM);
+    sprintf(prompt, "%s%s%s: %s%s%s%s%s%s%s\n%s%s%s %s@%s ", YELLOW, hostname, NORM, GREENIT, __CWD,
+            NORM, spaces.c_str(), GRAY, timeBuffer, NORM, CYAN, username, NORM, RED, NORM);
     return prompt;
 }
 
