@@ -24,3 +24,6 @@ $(EXECUTABLES): $(OBJS)
 
 clean:
 	rm -rf $(EXECUTABLES) $(OBJS)
+
+format:
+	clang-format -i -style=file *.h *.cc
