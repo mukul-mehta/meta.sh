@@ -97,11 +97,16 @@ const char* getShellPrompt() {
     int width = size.ws_col;
     int numSpaces = width - (strlen(__CWD) + 2) - (strlen(hostname)) - (strlen(timeBuffer));
 
-    string spaces(numSpaces, ' ');
-    sprintf(prompt, ": %s%s%s%s%s%s%s [%s%s@%s%s] \n%s@%s ", GREEN, __CWD, NORM, spaces.c_str(),
-            GRAY, timeBuffer, NORM, CYAN, username, hostname, NORM, RED, NORM);
+    char* spaces = (char*)malloc(sizeof(char) * (numSpaces + 1));
+    memset(spaces, ' ', numSpaces);
+    spaces[numSpaces] = '\0';
+
+    sprintf(prompt, ": %s%s%s%s%s%s%s [%s%s@%s%s] \n%s@%s ", GREEN, __CWD, NORM, spaces, GRAY,
+            timeBuffer, NORM, CYAN, username, hostname, NORM, RED, NORM);
     sprintf(prompt, "%s%s%s: %s%s%s%s%s%s%s\n%s%s%s %s@%s ", YELLOW, hostname, NORM, GREENIT, __CWD,
-            NORM, spaces.c_str(), GRAY, timeBuffer, NORM, CYAN, username, NORM, RED, NORM);
+            NORM, spaces, GRAY, timeBuffer, NORM, CYAN, username, NORM, RED, NORM);
+
+    free(spaces);
     return prompt;
 }
 

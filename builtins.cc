@@ -68,9 +68,9 @@ int metash_pwd(vector<string> tokens) {
     }
 
     char* current_directory = (char*)malloc(BUFSIZE * sizeof(char));
-    string pwd = getcwd(current_directory, BUFSIZE);
-    if (!pwd.empty()) {
-        printf("%s\n", pwd.c_str());
+    const char* pwd = getcwd(current_directory, BUFSIZE);
+    if (!pwd) {
+        printf("%s\n", pwd);
         return 0;
     }
     perror("Error in fetching current working directory");
@@ -84,7 +84,7 @@ int metash_cd(vector<string> tokens) {
         return -1;
     }
 
-    string new_directory_rel;
+    const char* new_directory_rel;
     char* new_directory = (char*)malloc(BUFSIZE * sizeof(char));
     // If no argument is passed, assume cd to home directory of user. Fetch home directory path
     if (num_tokens == 1) {
@@ -93,10 +93,10 @@ int metash_cd(vector<string> tokens) {
         new_directory_rel =
             pw->pw_dir; // Stores the home direcoty path of the user executing the program
     } else {
-        new_directory_rel = tokens[1];
+        new_directory_rel = tokens[1].c_str();
     }
     // In case of links, or if a relative path is specified, generate the real path
-    char* temp = realpath(new_directory_rel.c_str(), new_directory);
+    char* temp = realpath(new_directory_rel, new_directory);
     if (!temp)
         perror("Couldn't get realpath");
 
@@ -115,7 +115,7 @@ int metash_fetch(unused vector<string> tokens) {
     const char* hostname = getHostname();
     const char* OSname = getOSName();
 
-    string kernel_name, kernel_version, machine;
+    char *kernel_name, *kernel_version, *machine;
 
     long uptime = -1;
     long total_memory = -1;
@@ -150,11 +150,12 @@ int metash_fetch(unused vector<string> tokens) {
     printf(user_host_string);
     for (size_t i = 0; i <= len; i++)
         printf("-");
+
     printf("\n");
 
     printf("%sOS%s:       %s\n", BLUE, NORM, OSname);
-    printf("%sKernel%s:   %s %s\n", BLUE, NORM, kernel_name.c_str(), kernel_version.c_str());
-    printf("%sPlatform%s: %s\n", BLUE, NORM, machine.c_str());
+    printf("%sKernel%s:   %s %s\n", BLUE, NORM, kernel_name, kernel_version);
+    printf("%sPlatform%s: %s\n", BLUE, NORM, machine);
     printf("%sMemory%s:   %s / %s\n", BLUE, NORM, parse_memory(consumed_memory),
            parse_memory(total_memory));
     printf("%sUptime%s:   %s\n", BLUE, NORM, parse_time(uptime));
