@@ -24,7 +24,7 @@
 	The tokenizer escapes quotes, spaces and the backslash character
 
 */
-std::vector<std::string> tokenize(char *line);
+std::vector<std::string> tokenize(char* line);
 
 /*
 	vector<vector<string>> parsePipeTokens(vector<string> tokens)

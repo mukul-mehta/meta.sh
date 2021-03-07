@@ -33,11 +33,10 @@
 		help: string -> Doc about the command, displayed when the builtin `help` is called
 	------------------
 */
-struct builtinFunction
-{
-	int (*builtin_fp)(std::vector<std::string> tokens);
-	std::string command;
-	std::string help;
+struct builtinFunction {
+    int (*builtin_fp)(std::vector<std::string> tokens);
+    std::string command;
+    std::string help;
 };
 
 /*
