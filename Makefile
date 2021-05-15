@@ -17,10 +17,10 @@ OBJS=$(SRCS:.cc=.o)
 all: $(EXECUTABLES)
 
 $(EXECUTABLES): $(OBJS)
-	$(CXX) $(CXXFLAGS) $(LDFLAGS) $(OBJS) -o $@
+	$(CXX) $(CXXFLAGS) $(OBJS) $(LDFLAGS) -o $@
 
 .cc.o:
-	$(CXX) $(CXXFLAGS) $(LDFLAGS) -c $< -o $@
+	$(CXX) $(CXXFLAGS) -c $< $(LDFLAGS) -o $@
 
 clean:
 	rm -rf $(EXECUTABLES) $(OBJS)
