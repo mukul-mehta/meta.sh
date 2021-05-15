@@ -21,7 +21,7 @@
 
 #define SHELL "meta.sh"
 #define VERSION "0.1"
-#define AUTHORS "Mukul Mehta | Rashil Gandhi"
+#define AUTHORS "Mukul Mehta"
 
 /*
 	struct builtinFunction
