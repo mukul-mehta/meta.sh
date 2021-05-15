@@ -147,7 +147,7 @@ int metash_fetch(unused vector<string> tokens) {
     sprintf(user_host_string, "%s%s@%s%s\n", BLUE, username.c_str(), hostname.c_str(), NORM);
     size_t len = username.size() + hostname.size();
 
-    printf(user_host_string);
+    printf("%s", user_host_string);
     for (size_t i = 0; i <= len; i++)
         printf("-");
     printf("\n");
