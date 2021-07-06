@@ -25,7 +25,7 @@ char __CWD[BUFSIZE];
 
 int metash_exit(unused vector<string> tokens) { exit(EXIT_SUCCESS); }
 
-int metash_help(vector<string> tokens) {
+int metash_help(unused vector<string> tokens) {
     printf("%s+++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++%s\n",
            PURPLE, NORM);
     printf("%s++++++%s /\\        %sHi there. There are \033[4mfive%s %sbuiltin commands%s     /\\ "
@@ -68,9 +68,9 @@ int metash_pwd(vector<string> tokens) {
     }
 
     char* current_directory = (char*)malloc(BUFSIZE * sizeof(char));
-    string pwd = getcwd(current_directory, BUFSIZE);
-    if (!pwd.empty()) {
-        printf("%s\n", pwd.c_str());
+    const char* pwd = getcwd(current_directory, BUFSIZE);
+    if (!pwd) {
+        printf("%s\n", pwd);
         return 0;
     }
     perror("Error in fetching current working directory");
@@ -84,7 +84,7 @@ int metash_cd(vector<string> tokens) {
         return -1;
     }
 
-    string new_directory_rel;
+    const char* new_directory_rel;
     char* new_directory = (char*)malloc(BUFSIZE * sizeof(char));
     // If no argument is passed, assume cd to home directory of user. Fetch home directory path
     if (num_tokens == 1) {
@@ -93,10 +93,10 @@ int metash_cd(vector<string> tokens) {
         new_directory_rel =
             pw->pw_dir; // Stores the home direcoty path of the user executing the program
     } else {
-        new_directory_rel = tokens[1];
+        new_directory_rel = tokens[1].c_str();
     }
     // In case of links, or if a relative path is specified, generate the real path
-    char* temp = realpath(new_directory_rel.c_str(), new_directory);
+    char* temp = realpath(new_directory_rel, new_directory);
     if (!temp)
         perror("Couldn't get realpath");
 
@@ -111,11 +111,11 @@ int metash_cd(vector<string> tokens) {
 
 int metash_fetch(unused vector<string> tokens) {
     // Fetch username, hostname and OS Name
-    unused string username = getUsername();
-    unused string hostname = getHostname();
-    unused string OSname = getOSName();
+    const char* username = getUsername();
+    const char* hostname = getHostname();
+    const char* OSname = getOSName();
 
-    string kernel_name, kernel_version, machine;
+    char *kernel_name, *kernel_version, *machine;
 
     long uptime = -1;
     long total_memory = -1;
@@ -144,17 +144,18 @@ int metash_fetch(unused vector<string> tokens) {
     }
 
     char* user_host_string = (char*)malloc(BUFSIZE * sizeof(char));
-    sprintf(user_host_string, "%s%s@%s%s\n", BLUE, username.c_str(), hostname.c_str(), NORM);
-    size_t len = username.size() + hostname.size();
+    sprintf(user_host_string, "%s%s@%s%s\n", BLUE, username, hostname, NORM);
+    size_t len = strlen(username) + strlen(hostname);
 
     printf("%s", user_host_string);
     for (size_t i = 0; i <= len; i++)
         printf("-");
+
     printf("\n");
 
-    printf("%sOS%s:       %s\n", BLUE, NORM, OSname.c_str());
-    printf("%sKernel%s:   %s %s\n", BLUE, NORM, kernel_name.c_str(), kernel_version.c_str());
-    printf("%sPlatform%s: %s\n", BLUE, NORM, machine.c_str());
+    printf("%sOS%s:       %s\n", BLUE, NORM, OSname);
+    printf("%sKernel%s:   %s %s\n", BLUE, NORM, kernel_name, kernel_version);
+    printf("%sPlatform%s: %s\n", BLUE, NORM, machine);
     printf("%sMemory%s:   %s / %s\n", BLUE, NORM, parse_memory(consumed_memory),
            parse_memory(total_memory));
     printf("%sUptime%s:   %s\n", BLUE, NORM, parse_time(uptime));

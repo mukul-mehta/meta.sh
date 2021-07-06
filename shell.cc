@@ -80,8 +80,8 @@ int checkBuiltin(vector<string> tokens) {
 }
 
 const char* getShellPrompt() {
-    string username = getUsername();
-    string hostname = getHostname();
+    const char* username = getUsername();
+    const char* hostname = getHostname();
     char timeBuffer[12];
 
     auto t = time(nullptr);
@@ -95,14 +95,18 @@ const char* getShellPrompt() {
     struct winsize size;
     ioctl(STDOUT_FILENO, TIOCGWINSZ, &size);
     int width = size.ws_col;
-    int numSpaces = width - (strlen(__CWD) + 2) - (hostname.size()) - (strlen(timeBuffer));
+    int numSpaces = width - (strlen(__CWD) + 2) - (strlen(hostname)) - (strlen(timeBuffer));
 
-    string spaces(numSpaces, ' ');
-    sprintf(prompt, ": %s%s%s%s%s%s%s [%s%s@%s%s] \n%s@%s ", GREEN, __CWD, NORM, spaces.c_str(),
-            GRAY, timeBuffer, NORM, CYAN, username.c_str(), hostname.c_str(), NORM, RED, NORM);
-    sprintf(prompt, "%s%s%s: %s%s%s%s%s%s%s\n%s%s%s %s@%s ", YELLOW, hostname.c_str(), NORM,
-            GREENIT, __CWD, NORM, spaces.c_str(), GRAY, timeBuffer, NORM, CYAN, username.c_str(),
-            NORM, RED, NORM);
+    char* spaces = (char*)malloc(sizeof(char) * (numSpaces + 1));
+    memset(spaces, ' ', numSpaces);
+    spaces[numSpaces] = '\0';
+
+    sprintf(prompt, ": %s%s%s%s%s%s%s [%s%s@%s%s] \n%s@%s ", GREEN, __CWD, NORM, spaces, GRAY,
+            timeBuffer, NORM, CYAN, username, hostname, NORM, RED, NORM);
+    sprintf(prompt, "%s%s%s: %s%s%s%s%s%s%s\n%s%s%s %s@%s ", YELLOW, hostname, NORM, GREENIT, __CWD,
+            NORM, spaces, GRAY, timeBuffer, NORM, CYAN, username, NORM, RED, NORM);
+
+    free(spaces);
     return prompt;
 }
 
@@ -138,7 +142,7 @@ int main(int argc, char** argv) {
         } else {
             // If the last token of the input is &, the command is to be run in background
             // Set the bool isBackground and remove the token because execvp does not need it
-            unused bool isBackground = false;
+            bool isBackground = false;
             if (tokens[tokens.size() - 1] == "&") {
                 isBackground = true;
                 tokens.pop_back();
